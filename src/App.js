@@ -23,9 +23,12 @@ function App() {
   ])
 
   const [newTask, setNewTask] = useState('')
+  const [search, setSearch] = useState('')
 
   const today = new Date();
   const inputRef = useRef();
+
+  const filteredTasks = tasks.filter(task => ((task.task).toLowerCase()).includes(search.toLowerCase()))
 
   const AddNewTask = (task) => {
     const id = tasks.length ? tasks[tasks.length - 1].id + 1 : 1;
@@ -77,8 +80,19 @@ function App() {
             tabIndex='0'
           />
       </form>
+      <form>
+        <label htmlFor="search">Search</label>
+        <input
+          type='text'
+          id='search'
+          role='searchbox'
+          placeholder='Search Items'
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </form>
       <Content 
-        tasks={tasks}
+        tasks={filteredTasks}
         handleChecked={handleChecked}
         handleDelete={handleDelete}
       />
