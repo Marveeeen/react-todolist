@@ -12,7 +12,10 @@ const Content = ({ tasks, handleChecked, handleDelete}) => {
                   checked={task.done}
                   onChange={() => handleChecked(task.id)}
                   />
-                <label>{task.task}</label>
+                <label
+                  style={(task.done) ? {textDecoration: 'line-through'}: null}
+                  onDoubleClick={() => handleChecked(task.id)}
+                >{task.task}</label>
                 <FaTrashAlt 
                     onClick={() => handleDelete(task.id)}
                     role='button'

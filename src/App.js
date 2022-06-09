@@ -1,7 +1,10 @@
 import { useState, useRef } from "react";
-import Content from "./Content";
 
-import { FaPlus } from 'react-icons/fa'
+import Content from "./components/Content";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import AddTask from "./components/AddTask";
+import SearchTask from "./components/SearchTask";
 
 function App() {
   const [tasks, setTasks]  = useState([
@@ -24,9 +27,6 @@ function App() {
 
   const [newTask, setNewTask] = useState('')
   const [search, setSearch] = useState('')
-
-  const today = new Date();
-  const inputRef = useRef();
 
   const filteredTasks = tasks.filter(task => ((task.task).toLowerCase()).includes(search.toLowerCase()))
 
@@ -59,46 +59,22 @@ function App() {
   
   return (
     <div className="App">
-      <header>
-        <h1>Tasks Management</h1>
-      </header>
-      <form>
-        <label htmlFor="addTask">Add Task</label>
-        <input
-          autoFocus
-          type='text'
-          id='addTask'
-          ref={inputRef}
-          required
-          value={newTask}
-          onChange={(e) => setNewTask(e.target.value)}
-          placeholder='Add Task'
-        />
-          <FaPlus 
-            onClick={handleAddTask}
-            role='button'
-            tabIndex='0'
-          />
-      </form>
-      <form>
-        <label htmlFor="search">Search</label>
-        <input
-          type='text'
-          id='search'
-          role='searchbox'
-          placeholder='Search Items'
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </form>
+      <Header title='Task Management'/>
+      <AddTask 
+        newTask={newTask}
+        setNewTask={setNewTask}
+        handleAddTask={handleAddTask}
+      />
+      <SearchTask 
+        search={search}
+        setSearch={setSearch}
+      />
       <Content 
         tasks={filteredTasks}
         handleChecked={handleChecked}
         handleDelete={handleDelete}
       />
-      <footer>
-          <p>Copyrigt &copy; {today.getFullYear()}</p>
-      </footer>
+      <Footer length={tasks.length}/>
     </div>
   );
 }
