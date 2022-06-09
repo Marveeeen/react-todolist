@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Content from "./Content";
+
+import { FaPlus } from 'react-icons/fa'
 
 function App() {
   const [tasks, setTasks]  = useState([
@@ -20,7 +22,17 @@ function App() {
     },
   ])
 
+  const [newTask, setNewTask] = useState('')
+
   const today = new Date();
+  const inputRef = useRef();
+
+  const AddNewTask = (task) => {
+    const id = tasks.length ? tasks[tasks.length - 1].id + 1 : 1;
+    const myNewTask = { id, done: false, task}
+    const taskLists = [...tasks, myNewTask];
+    setTasks(taskLists);
+  }
   
   const handleChecked = (id) => {
     console.log(id)
@@ -35,12 +47,36 @@ function App() {
     const taskLists = tasks.filter(task => task.id !== id)
     setTasks(taskLists);
   }
+
+  const handleAddTask = () => {
+    if (!newTask) return;
+    AddNewTask(newTask);
+    setNewTask('')
+  }
   
   return (
     <div className="App">
       <header>
         <h1>Tasks Management</h1>
       </header>
+      <form>
+        <label htmlFor="addTask">Add Task</label>
+        <input
+          autoFocus
+          type='text'
+          id='addTask'
+          ref={inputRef}
+          required
+          value={newTask}
+          onChange={(e) => setNewTask(e.target.value)}
+          placeholder='Add Task'
+        />
+          <FaPlus 
+            onClick={handleAddTask}
+            role='button'
+            tabIndex='0'
+          />
+      </form>
       <Content 
         tasks={tasks}
         handleChecked={handleChecked}
