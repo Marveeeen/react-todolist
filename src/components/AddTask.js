@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 const AddTask = ({ newTask, setNewTask, handleAddTask }) => {
   const inputRef = useRef();
   return (
-    <form>
+    <form className="addForm">
       <label htmlFor="addTask">Add Task</label>
       <input
         autoFocus
@@ -16,7 +16,13 @@ const AddTask = ({ newTask, setNewTask, handleAddTask }) => {
         onChange={(e) => setNewTask(e.target.value)}
         placeholder="Add Task"
       />
-      <FaPlus onClick={handleAddTask} role="button" tabIndex="0" />
+      <button
+        type="button"
+        aria-label="Add Task"
+        onClick={() => inputRef.current.focus()}
+      >
+        <FaPlus onClick={handleAddTask} role="button" tabIndex="0" />
+      </button>
     </form>
   );
 };

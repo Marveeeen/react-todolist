@@ -1,6 +1,6 @@
 const SearchTask = ({ search, setSearch }) => {
   return (
-    <form>
+    <form className="searchForm">
       <label htmlFor="search">Search</label>
       <input
         type="text"
