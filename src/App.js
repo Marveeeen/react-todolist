@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Content from "./Content";
 
 function App() {
   const [tasks, setTasks]  = useState([
@@ -29,30 +30,22 @@ function App() {
 
     setTasks(taskLists)
   }
+
+  const handleDelete = (id) => {
+    const taskLists = tasks.filter(task => task.id !== id)
+    setTasks(taskLists);
+  }
   
   return (
     <div className="App">
       <header>
         <h1>Tasks Management</h1>
       </header>
-      <main>
-        {tasks.length ? (
-          <ul>
-            {tasks.map(task => (
-              <li key={task.id}>
-                <input 
-                  type="checkbox"
-                  checked={task.done}
-                  onChange={() => handleChecked(task.id)}
-                  />
-                <label>{task.task}</label>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Your Task is empty.</p>
-        )}
-      </main>
+      <Content 
+        tasks={tasks}
+        handleChecked={handleChecked}
+        handleDelete={handleDelete}
+      />
       <footer>
           <p>Copyrigt &copy; {today.getFullYear()}</p>
       </footer>
